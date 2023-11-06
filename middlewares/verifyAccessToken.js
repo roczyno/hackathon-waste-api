@@ -11,7 +11,7 @@ export const verifyAccessToken = (req, res, next) => {
       next();
     });
   } else {
-    return res.status(401).json("You are not authenticated");
+    return res.status(401).json("You are not authenticated!");
   }
 };
 
