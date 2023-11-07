@@ -107,6 +107,16 @@ export const login = async (req, res,next) => {
       return next(createError(401, "Wrong credentials"));
     }
 
+    const appType = req.body.appType;
+    let baseUrl;
+
+    if (appType === 'app1') {
+      baseUrl = frontendApp1BaseUrl;
+    } else if (appType === 'app2') {
+      baseUrl = frontendApp2BaseUrl;
+    } else {
+      return res.status(400).send({ message: 'Invalid appType' });
+    }
     if (!user.verified) {
       let token = await Token.findOne({ userId: user._id });
       if (!token) {
@@ -115,7 +125,7 @@ export const login = async (req, res,next) => {
           token: crypto.randomBytes(32).toString("hex"),
         }).save();
 
-        const url = `${process.env.BASE_URL}/api/auth/${token.userId}/verify/${token.token}`;
+        const url = `${baseUrl}/api/auth/${token.userId}/verify/${token.token}`;
         await sendVerificationEmail(user.email, "Verify email", url);
       }
 
