@@ -20,7 +20,7 @@ export const updateWasteRequest = async (req, res) => {
       },
       { new: true }
     )
-    const savedUpdatedWasteRequest=updateWasteRequest.save()
+    const savedUpdatedWasteRequest=- await updateWasteRequest.save()
     
     res.status(200).send({ message: "Update successfully" });
   } catch (error) {
