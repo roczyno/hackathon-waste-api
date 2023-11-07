@@ -77,6 +77,7 @@ export const verifyTokenSentToEmail = async (req, res, next) => {
       userId: user._id,
       token: req.params.token,
     });
+
     if (!token) return res.status(400).send({ message: "Invalid link" });
 
     await User.updateOne({ _id: user._id }, { verified: true });
@@ -96,7 +97,7 @@ export const login = async (req, res,next) => {
     if (!user) {
       return next(createError(401, "User not found"));
     }
-    // Decrypt and compare the password, send verification email if needed
+    
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
       process.env.SECRET_KEY
@@ -115,7 +116,7 @@ export const login = async (req, res,next) => {
         }).save();
 
         const url = `${process.env.BASE_URL}/api/auth/${token.userId}/verify/${token.token}`;
-        await sendEmail(user.email, "Verify email", url);
+        await sendVerificationEmail(user.email, "Verify email", url);
       }
 
       return res
@@ -132,7 +133,8 @@ export const login = async (req, res,next) => {
       process.env.SECRET_KEY,
       { expiresIn: "5d" }
     );
-const{password,...info}=user._doc
+
+    const{password,...info}=user._doc
     res
       .status(200)
       .json({...info, accessToken });

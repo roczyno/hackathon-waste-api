@@ -24,7 +24,7 @@ export const sendVerificationEmail = async (email, subject, text) => {
      
      Verification link: ${text}
      
-     Please clcik on this link to start using our service.
+     Please click on this link to start using our service.
      
      If you didn't sign up for an account with us, please ignore this message. Someone may have used your email address by mistake, and no further action is required.
      
