@@ -13,18 +13,19 @@ export const createWasteRequest = async (req, res) => {
 
 export const updateWasteRequest = async (req, res) => {
   try {
-    const updatedWasteRequest = Waste.findByIdAndUpdate(
-      req.param.id,
+    const updatedWasteRequest = await Waste.findByIdAndUpdate(
+      req.params.id,
       {
         $set: req.body,
       },
       { new: true }
     )
-    const savedUpdatedWasteRequest=- await updateWasteRequest.save()
+    
     
     res.status(200).send({ message: "Update successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
+    console.log(error)
   }
 };
 export const getAllWasteRequest = async (req, res) => {
