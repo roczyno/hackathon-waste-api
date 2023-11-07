@@ -19,7 +19,9 @@ export const updateWasteRequest = async (req, res) => {
         $set: req.body,
       },
       { new: true }
-    );
+    )
+    const savedUpdatedWasteRequest=updateWasteRequest.save()
+    
     res.status(200).send({ message: "Update successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
