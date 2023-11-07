@@ -30,7 +30,7 @@ export const getAllWasteRequest = async (req, res) => {
   const search = req.query.search;
   try {
     const wasteRequests = query
-      ? await Waste.find().sort({ _id: -1 }).limmit(10)
+      ? await Waste.find().sort({ _id: -1 }).limit(10)
       : search
       ? await Waste.find({
           username: { $regex: search, $options: "i" },
