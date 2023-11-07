@@ -8,6 +8,7 @@ export const validateData = (data) => {
     password: passswordComplexity().required().label("password"),
     location: joi.string().required().label("location"),
     date: joi.string().required().label("date"),
+    appType:joi.string().required().label("appType"),
   });
 
   return schema.validate(data);

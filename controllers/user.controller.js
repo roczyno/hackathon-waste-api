@@ -11,6 +11,8 @@ export const getUser = async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 export const getUsers = async (req, res, next) => {
   const query = req.query.new;
   try {
@@ -22,6 +24,8 @@ export const getUsers = async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 export const deleteUser = async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req.params.id);
@@ -30,6 +34,8 @@ export const deleteUser = async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 export const updateUser = async (req, res, next) => {
   try {
     const updateUser = await User.findByIdAndUpdate(
@@ -44,6 +50,7 @@ export const updateUser = async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 export const getUserStats = async (req, res) => {
   const date = new Date();
@@ -66,5 +73,15 @@ export const getUserStats = async (req, res) => {
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);
+  }
+};
+
+
+export const countUsers = async (req, res) => {
+  try {
+    const userCount = await User.countDocuments();
+    res.status(200).json({ count: userCount });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  countUsers,
   deleteUser,
   getUser,
   getUsers,
@@ -14,5 +15,6 @@ router.get("/all",verifyAccessTokenAndAdmin, getUsers);
 router.get("/:id",verifyAccessTokenAndAdmin, getUser);
 router.put("/:id",verifyAccessTokenAndAuthorization, updateUser);
 router.delete("/:id",verifyAccessTokenAndAuthorization,deleteUser);
+router.get("/total",countUsers)
 
 export default router;
