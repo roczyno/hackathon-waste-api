@@ -51,7 +51,7 @@ export const deleteWasteRequest = async (req, res) => {
   }
 };
 
-export const changeStatus = async (req, res) => {
+export const changeStatus = async (req, res,next) => {
   try {
     const request = await Waste.findById(req.params.id);
     request.status = "Waste Collected";
