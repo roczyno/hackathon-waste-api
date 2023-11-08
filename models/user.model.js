@@ -2,10 +2,7 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-    },
+    
     email: {
       type: String,
       required: true,
@@ -15,14 +12,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    location: {
-      type: String,
-      required: true,
-    },
-    date: {
-      type: Date,
-      required: true,
-    },
+   confirmPassword:{
+    type: String,
+    required: true,
+   },
     isAdmin: {
       type: Boolean,
       default: false,
