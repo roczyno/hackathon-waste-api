@@ -18,6 +18,10 @@ const WasteRequestSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    date:{
+      type: String,
+      required: true,
+    },
     numberOfBins: {
       type: String,
       required: true,
