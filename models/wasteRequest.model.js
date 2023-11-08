@@ -19,7 +19,7 @@ const WasteRequestSchema = new mongoose.Schema(
       required: true,
     },
     numberOfBins: {
-      type: Number,
+      type: String,
       required: true,
     },
     serviceOption: {
