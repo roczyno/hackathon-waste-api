@@ -53,6 +53,18 @@ export const deleteWasteRequest = async (req, res) => {
   }
 };
 
+export const latestRequest= async (req, res) => {
+  try {
+    const latestRequest = await Waste.findOne().sort({ createdAt: -1 });
+    if (!latestRequest) {
+      return res.status(404).json({ message: 'No latest request found' });
+    }
+    res.status(200).json(latestRequest);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 export const changeStatus = async (req, res, next) => {
   try {
     const request = await Waste.findById(req.params.id);

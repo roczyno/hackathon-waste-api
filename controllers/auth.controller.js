@@ -8,9 +8,10 @@ import createError from "../utils/createError.js";
 import jwt from "jsonwebtoken"
 import crypto from "crypto";
 
-const frontendApp1BaseUrl = "http://localhost:5173";
+const webBaseUrl = "http://localhost:5173";
+const mobileBaseUrl = "http://localhost:5324";
 
-// Function to register a new user
+
 export const register = async (req, res, next) => {
   try {
     // Validate user data
@@ -18,21 +19,23 @@ export const register = async (req, res, next) => {
     if (error) {
       return res.status(400).send({ message: error.details[0].message });
     }
-
-    // Check if a user with the same email already exists
     const user = await User.findOne({ email: req.body.email });
     if (user) {
       return res.status(409).send({message:"user already exists"})
     }
 
     // Encrypt the user's password and save it
-    const hash = CryptoJS.AES.encrypt(
+    const hashedPassword = CryptoJS.AES.encrypt(
       req.body.password,
       process.env.SECRET_KEY
     ).toString();
+
+   
+
     const newUser = new User({
       ...req.body,
-      password: hash,
+      password: hashedPassword,
+      
     });
     const savedUser = await newUser.save();
 
@@ -40,9 +43,9 @@ export const register = async (req, res, next) => {
     let baseUrl;
 
     if (appType === 'app1') {
-      baseUrl = frontendApp1BaseUrl;
+      baseUrl = webBaseUrl;
     } else if (appType === 'app2') {
-      baseUrl = frontendApp2BaseUrl;
+      baseUrl = mobileBaseUrl;
     } else {
       return res.status(400).send({ message: 'Invalid appType' });
     }
@@ -110,9 +113,9 @@ export const login = async (req, res,next) => {
     let baseUrl;
 
     if (appType === 'app1') {
-      baseUrl = frontendApp1BaseUrl;
+      baseUrl = webBaseUrl;
     } else if (appType === 'app2') {
-      baseUrl = frontendApp2BaseUrl;
+      baseUrl = mobileBaseUrl;
     } else {
       return res.status(400).send({ message: 'Invalid appType' });
     }
@@ -143,7 +146,7 @@ export const login = async (req, res,next) => {
       { expiresIn: "5d" }
     );
 
-    const{password,...info}=user._doc
+    const{password,confirmPassword,...info}=user._doc
     res
       .status(200)
       .json({...info, accessToken });
