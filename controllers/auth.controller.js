@@ -8,8 +8,7 @@ import createError from "../utils/createError.js";
 import jwt from "jsonwebtoken"
 import crypto from "crypto";
 
-const frontendApp1BaseUrl = process.env.FRONTEND_APP_1_BASE_URL;
-const frontendApp2BaseUrl = process.env.FRONTEND_APP_2_BASE_URL;
+const frontendApp1BaseUrl = "http://localhost:5173";
 
 // Function to register a new user
 export const register = async (req, res, next) => {
