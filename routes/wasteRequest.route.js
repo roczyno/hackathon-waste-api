@@ -20,7 +20,7 @@ router.post("/add", verifyAccessToken, createWasteRequest);
 router.get("/all", verifyAccessToken, getAllWasteRequest);
 router.put("/update/:id", verifyAccessToken, updateWasteRequest);
 router.delete("/delete/:id", verifyAccessTokenAndAdmin, deleteWasteRequest);
-router.put("/verify/:id", verifyAccessTokenAndAdmin, changeStatus);
+router.put("/verify/:id", changeStatus);
 router.get("/", verifyAccessTokenAndAdmin, countRequest);
 router.get("/stat", verifyAccessTokenAndAdmin, getWasteRequestStats);
 router.get("/latest",verifyAccessToken,latestRequest)
