@@ -75,6 +75,7 @@ export const changeStatus = async (req, res, next) => {
     res.status(200).send({ message: "Update successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
+    console.log(error)
   }
 };
 
