@@ -1,16 +1,17 @@
-import User from "../models/user.model.js"
+import User from "../models/user.model.js";
 import CryptoJS from "crypto-js";
 import Token from "../models/token.model.js";
 import { validateData } from "../utils/validateData.js";
 import { sendVerificationEmail } from "../utils/sendVerificationEmail.js";
 import { sendEmailForPasswordReset } from "../utils/sendEmailForPasswordReset.js";
 import createError from "../utils/createError.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import joi from "joi";
+import passwordComplexity from "joi-password-complexity";
 
 const webBaseUrl = "https://wasty.onrender.com";
 const mobileBaseUrl = "https://wasty.onrender.com";
-
 
 export const register = async (req, res, next) => {
   try {
@@ -21,7 +22,7 @@ export const register = async (req, res, next) => {
     }
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      return res.status(409).send({message:"user already exists"})
+      return res.status(409).send({ message: "user already exists" });
     }
 
     // Encrypt the user's password and save it
@@ -30,41 +31,38 @@ export const register = async (req, res, next) => {
       process.env.SECRET_KEY
     ).toString();
 
-   
-
     const newUser = new User({
       ...req.body,
       password: hashedPassword,
-      
     });
     const savedUser = await newUser.save();
 
     const appType = req.body.appType;
     let baseUrl;
 
-    if (appType === 'app1') {
+    if (appType === "app1") {
       baseUrl = webBaseUrl;
-    } else if (appType === 'app2') {
+    } else if (appType === "app2") {
       baseUrl = mobileBaseUrl;
     } else {
-      return res.status(400).send({ message: 'Invalid appType' });
+      return res.status(400).send({ message: "Invalid appType" });
     }
 
     // Generate a verification token and send a verification email
     const token = new Token({
-        userId: savedUser._id,
-        token: crypto.randomBytes(32).toString("hex"),
-      });
-      const savedToken = await token.save();
-      const url = `${baseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
-      await sendVerificationEmail(savedUser.email, "Verify your email", url);
-      
-      res
+      userId: savedUser._id,
+      token: crypto.randomBytes(32).toString("hex"),
+    });
+    const savedToken = await token.save();
+    const url = `${baseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
+    await sendVerificationEmail(savedUser.email, "Verify your email", url);
+
+    res
       .status(200)
       .send({ message: "Email sent to your account please verify" });
   } catch (error) {
     res.status(500).send({ message: "Internal server error" });
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -91,15 +89,13 @@ export const verifyTokenSentToEmail = async (req, res, next) => {
   }
 };
 
-
-export const login = async (req, res,next) => {
+export const login = async (req, res, next) => {
   try {
-   
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return next(createError(401, "User not found"));
     }
-    
+
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
       process.env.SECRET_KEY
@@ -112,12 +108,12 @@ export const login = async (req, res,next) => {
     const appType = req.body.appType;
     let baseUrl;
 
-    if (appType === 'app1') {
+    if (appType === "app1") {
       baseUrl = webBaseUrl;
-    } else if (appType === 'app2') {
+    } else if (appType === "app2") {
       baseUrl = mobileBaseUrl;
     } else {
-      return res.status(400).send({ message: 'Invalid appType' });
+      return res.status(400).send({ message: "Invalid appType" });
     }
     if (!user.verified) {
       let token = await Token.findOne({ userId: user._id });
@@ -146,13 +142,11 @@ export const login = async (req, res,next) => {
       { expiresIn: "5d" }
     );
 
-    const{password,confirmPassword,...info}=user._doc
-    res
-      .status(200)
-      .json({...info, accessToken });
+    const { password, confirmPassword, ...info } = user._doc;
+    res.status(200).json({ ...info, accessToken });
   } catch (error) {
-    res.status(500).send({message:"Intenal server error"});
-    console.log(error)
+    res.status(500).send({ message: "Intenal server error" });
+    console.log(error);
   }
 };
 
@@ -179,12 +173,14 @@ export const passwordResetLink = async (req, res) => {
         token: crypto.randomBytes(32).toString("hex"),
       }).save();
     }
-    const url = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}`;
+    const url = `${webBaseUrl}/password-reset/${user._id}/${token.token}`;
     await sendEmailForPasswordReset(user.email, "Password-Reset", url);
     res
       .status(200)
       .send({ message: "Password reset link sent to your email account" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Function to verify a password reset link
