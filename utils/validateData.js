@@ -6,7 +6,6 @@ export const validateData = (data) => {
     username: joi.string().required().label("username"),
     email: joi.string().required().label("email"),
     password: passswordComplexity().required().label("password"),
-    confirmPassword: joi.string().required().label("confirmPassword"),
     appType:joi.string().required().label("appType"),
   });
 
