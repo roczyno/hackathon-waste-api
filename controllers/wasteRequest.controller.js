@@ -8,6 +8,7 @@ export const createWasteRequest = async (req, res) => {
     res.status(201).send({ message: "Request sent successfully, Thank You" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
+    console.log(error)
   }
 };
 
@@ -75,7 +76,6 @@ export const changeStatus = async (req, res, next) => {
     res.status(200).send({ message: "Update successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
-    console.log(error)
   }
 };
 

@@ -8,8 +8,8 @@ import createError from "../utils/createError.js";
 import jwt from "jsonwebtoken"
 import crypto from "crypto";
 
-const webBaseUrl = "http://localhost:5173";
-const mobileBaseUrl = "http://localhost:5324";
+const webBaseUrl = "https://wasty.onrender.com";
+const mobileBaseUrl = "https://wasty.onrender.com";
 
 
 export const register = async (req, res, next) => {
