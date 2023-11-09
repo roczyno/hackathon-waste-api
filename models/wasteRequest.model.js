@@ -31,7 +31,7 @@ const WasteRequestSchema = new mongoose.Schema(
       required: true,
     },
     wasteType: {
-      type: Array,
+      type: String,
       required: true,
     },
     status: {
