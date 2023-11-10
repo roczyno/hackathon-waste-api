@@ -54,7 +54,7 @@ export const register = async (req, res, next) => {
       token: crypto.randomBytes(32).toString("hex"),
     });
     const savedToken = await token.save();
-    const url = `${baseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
+    const url = `${webBaseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
     await sendVerificationEmail(savedUser.email, "Verify your email", url);
 
     res
