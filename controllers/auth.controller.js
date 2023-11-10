@@ -151,7 +151,7 @@ export const login = async (req, res, next) => {
 };
 
 // Function to send a password reset link
-export const passwordResetLink = async (req, res) => {
+export const passwordResetLink = async (req, res,next) => {
   try {
     // Validate the email and send a password reset link
     const emailSchema = joi.object({
@@ -184,7 +184,7 @@ export const passwordResetLink = async (req, res) => {
 };
 
 // Function to verify a password reset link
-export const verifyPasswordResetLink = async (req, res) => {
+export const verifyPasswordResetLink = async (req, res,next) => {
   try {
     // Verify the user and the reset token
     const user = await User.findOne({ _id: req.params.id });
@@ -204,7 +204,7 @@ export const verifyPasswordResetLink = async (req, res) => {
 };
 
 // Function to reset the user's password
-export const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res,next) => {
   try {
     // Validate the new password and reset it
     const passwordSchema = joi.object({
