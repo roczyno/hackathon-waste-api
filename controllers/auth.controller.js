@@ -22,7 +22,7 @@ export const register = async (req, res, next) => {
     }
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      return res.status(409).send({ message: "user already exists" });
+      return res.status(409).send({ message: "user already exists!" });
     }
 
     // Encrypt the user's password and save it
@@ -56,11 +56,11 @@ export const register = async (req, res, next) => {
     const savedToken = await token.save();
 
     const url = `${webBaseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
-    await sendVerificationEmail(savedUser.email, "Verify your email", url);
+    await sendVerificationEmail(savedUser.email, "Verify your email!", url);
 
     res
       .status(200)
-      .send({ message: "Email sent to your account please verify" });
+      .send({ message: "Email sent to your account please verify!" });
   } catch (error) {
     res.status(500).send({ message: "Internal server error" });
     console.log(error);
@@ -93,7 +93,7 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return next(createError(401, "User not found"));
+      return next(createError(401, "User not found!"));
     }
 
     const hashedPassword = CryptoJS.AES.decrypt(
@@ -102,7 +102,7 @@ export const login = async (req, res, next) => {
     );
     const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
     if (originalPassword !== req.body.password) {
-      return next(createError(401, "Wrong credentials"));
+      return next(createError(401, "Wrong credentials!"));
     }
 
     const appType = req.body.appType;

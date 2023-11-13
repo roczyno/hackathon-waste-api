@@ -21,9 +21,10 @@ export const sendVerificationEmail = async (email, subject, text) => {
       Welcome to our website! We're excited to have you join us.
      
      To complete your account setup, please use the verification link below:
+     </b>
      
      Verification link: ${text}
-     
+     </b>
      Please click on this link to start using our service.
      
      If you didn't sign up for an account with us, please ignore this message. Someone may have used your email address by mistake, and no further action is required.
@@ -32,7 +33,7 @@ export const sendVerificationEmail = async (email, subject, text) => {
      
      Thank you for choosing us. We look forward to serving you!
      
-     Best regards,
+     Best regards,cheers
      </p>`,
     });
 

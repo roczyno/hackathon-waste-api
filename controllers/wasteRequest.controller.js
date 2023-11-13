@@ -5,9 +5,9 @@ export const createWasteRequest = async (req, res) => {
   try {
     const wasteRequest = new Waste(req.body);
     const savedWasteRequest = await wasteRequest.save();
-    res.status(201).send({ message: "Request sent successfully, Thank You" });
+    res.status(201).send({ message: "Request sent successfully, Thank You!" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error!" });
     console.log(error);
   }
 };
@@ -22,9 +22,9 @@ export const updateWasteRequest = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).send({ message: "Update successfully" });
+    res.status(200).send({ message: "Update successfully!" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error!" });
     console.log(error);
   }
 };
@@ -41,15 +41,16 @@ export const getAllWasteRequest = async (req, res) => {
       : await Waste.find();
     res.status(200).json(wasteRequests);
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error!" });
   }
 };
+
 export const deleteWasteRequest = async (req, res) => {
   try {
     await Waste.findByIdAndDelete(req.params.id);
-    res.status(200).send({ message: "Deleted successfully" });
+    res.status(200).send({ message: "Deleted successfully!" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error!" });
     console.log(error);
   }
 };
@@ -58,11 +59,11 @@ export const latestRequest = async (req, res) => {
   try {
     const latestRequest = await Waste.findOne().sort({ createdAt: -1 });
     if (!latestRequest) {
-      return res.status(404).json({ message: "No latest request found" });
+      return res.status(404).json({ message: "No latest request found!" });
     }
     res.status(200).json(latestRequest);
   } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error!" });
   }
 };
 

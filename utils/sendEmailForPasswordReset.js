@@ -19,12 +19,13 @@ export const sendEmailForPasswordReset = async (email, subject, text) => {
       html: `<p>Hello there!!
       Welcome to our website! 
      please use the link below to reset your password:
+     </b>
      password reset Link: ${text}   
      If you have any questions or need assistance with your account, please contact our support team at adiabajacob9@gmail.com
      
      Thank you for choosing us. We look forward to serving you!
      
-     Best regards,
+     Best regards,cheers
      </p>`,
     });
 

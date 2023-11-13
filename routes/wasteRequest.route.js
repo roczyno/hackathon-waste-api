@@ -9,6 +9,7 @@ import {
   latestRequest,
   updateWasteRequest,
 } from "../controllers/wasteRequest.controller.js";
+
 import {
   verifyAccessToken,
   verifyAccessTokenAndAdmin,
@@ -23,5 +24,5 @@ router.delete("/delete/:id", verifyAccessTokenAndAdmin, deleteWasteRequest);
 router.put("/verify/:id", changeStatus);
 router.get("/", verifyAccessTokenAndAdmin, countRequest);
 router.get("/stat", verifyAccessTokenAndAdmin, getWasteRequestStats);
-router.get("/latest",verifyAccessToken,latestRequest)
+router.get("/latest", verifyAccessToken, latestRequest);
 export default router;
