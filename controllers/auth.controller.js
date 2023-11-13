@@ -54,7 +54,11 @@ export const register = async (req, res, next) => {
       token: crypto.randomBytes(32).toString("hex"),
     });
     const savedToken = await token.save();
+<<<<<<< HEAD
     const url = `${baseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
+=======
+    const url = `${webBaseUrl}/api/auth/${savedToken.userId}/verify/${savedToken.token}`;
+>>>>>>> d6e8804c79043b91890fa4173fa39f537a8add49
     await sendVerificationEmail(savedUser.email, "Verify your email", url);
 
     res
@@ -151,7 +155,11 @@ export const login = async (req, res, next) => {
 };
 
 // Function to send a password reset link
+<<<<<<< HEAD
 export const passwordResetLink = async (req, res) => {
+=======
+export const passwordResetLink = async (req, res,next) => {
+>>>>>>> d6e8804c79043b91890fa4173fa39f537a8add49
   try {
     // Validate the email and send a password reset link
     const emailSchema = joi.object({
@@ -184,7 +192,11 @@ export const passwordResetLink = async (req, res) => {
 };
 
 // Function to verify a password reset link
+<<<<<<< HEAD
 export const verifyPasswordResetLink = async (req, res) => {
+=======
+export const verifyPasswordResetLink = async (req, res,next) => {
+>>>>>>> d6e8804c79043b91890fa4173fa39f537a8add49
   try {
     // Verify the user and the reset token
     const user = await User.findOne({ _id: req.params.id });
@@ -204,7 +216,11 @@ export const verifyPasswordResetLink = async (req, res) => {
 };
 
 // Function to reset the user's password
+<<<<<<< HEAD
 export const resetPassword = async (req, res) => {
+=======
+export const resetPassword = async (req, res,next) => {
+>>>>>>> d6e8804c79043b91890fa4173fa39f537a8add49
   try {
     // Validate the new password and reset it
     const passwordSchema = joi.object({
