@@ -8,13 +8,13 @@ export const createWasteRequest = async (req, res) => {
     res.status(201).send({ message: "Request sent successfully, Thank You" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
-    console.log(error)
+    console.log(error);
   }
 };
 
 export const updateWasteRequest = async (req, res) => {
   try {
-    const updatedWasteRequest = await Waste.findByIdAndUpdate(
+    await Waste.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -54,17 +54,17 @@ export const deleteWasteRequest = async (req, res) => {
   }
 };
 
-export const latestRequest= async (req, res) => {
+export const latestRequest = async (req, res) => {
   try {
     const latestRequest = await Waste.findOne().sort({ createdAt: -1 });
     if (!latestRequest) {
-      return res.status(404).json({ message: 'No latest request found' });
+      return res.status(404).json({ message: "No latest request found" });
     }
     res.status(200).json(latestRequest);
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
 export const changeStatus = async (req, res, next) => {
   try {

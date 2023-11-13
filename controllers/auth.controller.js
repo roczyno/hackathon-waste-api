@@ -67,7 +67,6 @@ export const register = async (req, res, next) => {
   }
 };
 
-// Function to verify a token sent to the user's email
 export const verifyTokenSentToEmail = async (req, res, next) => {
   try {
     // Find the user and verify the token
@@ -133,7 +132,6 @@ export const login = async (req, res, next) => {
         .send({ message: "Email sent to your account, please verify" });
     }
 
-    // Generate and send an access token
     const accessToken = jwt.sign(
       {
         id: user._id,
@@ -151,7 +149,6 @@ export const login = async (req, res, next) => {
   }
 };
 
-// Function to send a password reset link
 export const passwordResetLink = async (req, res, next) => {
   try {
     // Validate the email and send a password reset link
@@ -184,7 +181,6 @@ export const passwordResetLink = async (req, res, next) => {
   }
 };
 
-// Function to verify a password reset link
 export const verifyPasswordResetLink = async (req, res, next) => {
   try {
     // Verify the user and the reset token
@@ -204,7 +200,6 @@ export const verifyPasswordResetLink = async (req, res, next) => {
   }
 };
 
-// Function to reset the user's password
 export const resetPassword = async (req, res, next) => {
   try {
     // Validate the new password and reset it
