@@ -8,6 +8,15 @@ import requestRouter from "./routes/wasteRequest.route.js";
 const app = express();
 dotenv.config();
 
+
+async function main() {
+  await mongoose.connect(process.env.MONGO_URL);
+  
+  console.log("connected to db");
+}
+main().catch((err) => console.log(err));
+
+//middlewares
 app.use(cors());
 app.use(express.json());
 app.use("/api/v1/auth", authRouter);
@@ -19,13 +28,6 @@ app.use((err, req, res, next) => {
   const errorMessage = err.message || "Internal server error";
   return res.status(errorStatus).send(errorMessage);
 });
-
-async function main() {
-  await mongoose.connect(process.env.MONGO_URL);
-
-  console.log("connected to db");
-}
-main().catch((err) => console.log(err));
 
 app.listen(5000, () => {
   console.log("server running..");

@@ -4,7 +4,7 @@ import createError from "../utils/createError.js";
 export const createWasteRequest = async (req, res) => {
   try {
     const wasteRequest = new Waste(req.body);
-    const savedWasteRequest = await wasteRequest.save();
+     await wasteRequest.save();
     res.status(201).send({ message: "Request sent successfully, Thank You!" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error!" });
@@ -22,7 +22,7 @@ export const updateWasteRequest = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).send({ message: "Update successfully!" });
+    res.status(200).send({ message: "Updated successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error!" });
     console.log(error);
@@ -48,7 +48,7 @@ export const getAllWasteRequest = async (req, res) => {
 export const deleteWasteRequest = async (req, res) => {
   try {
     await Waste.findByIdAndDelete(req.params.id);
-    res.status(200).send({ message: "Deleted successfully!" });
+    res.status(200).send({ message: " Request deleted successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error!" });
     console.log(error);
@@ -112,7 +112,7 @@ export const getWasteRequestStats = async (req, res) => {
       },
     ]);
     res.status(200).json(data);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    res.status(500).json(error);
   }
 };

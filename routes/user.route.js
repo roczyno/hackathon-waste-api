@@ -3,6 +3,7 @@ import {
   countUsers,
   deleteUser,
   getUser,
+  getUserStats,
   getUsers,
   updateUser,
 } from "../controllers/user.controller.js";
@@ -19,5 +20,5 @@ router.get("/:id", verifyAccessTokenAndAdmin, getUser);
 router.put("/:id", verifyAccessTokenAndAuthorization, updateUser);
 router.delete("/:id", verifyAccessTokenAndAuthorization, deleteUser);
 router.get("/", countUsers);
-
+router.get("/stat",verifyAccessTokenAndAdmin,getUserStats)
 export default router;

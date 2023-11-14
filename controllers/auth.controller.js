@@ -25,7 +25,6 @@ export const register = async (req, res, next) => {
       return res.status(409).send({ message: "user already exists!" });
     }
 
-    // Encrypt the user's password and save it
     const hashedPassword = CryptoJS.AES.encrypt(
       req.body.password,
       process.env.SECRET_KEY
@@ -35,6 +34,7 @@ export const register = async (req, res, next) => {
       ...req.body,
       password: hashedPassword,
     });
+
     const savedUser = await newUser.save();
 
     const appType = req.body.appType;
@@ -141,7 +141,7 @@ export const login = async (req, res, next) => {
       { expiresIn: "5d" }
     );
 
-    const { password, confirmPassword, ...info } = user._doc;
+    const { password,...info } = user._doc;
     res.status(200).json({ ...info, accessToken });
   } catch (error) {
     res.status(500).send({ message: "Intenal server error" });
@@ -165,6 +165,7 @@ export const passwordResetLink = async (req, res, next) => {
     let token = await Token.findOne({
       userId: user._id,
     });
+
     if (!token) {
       token = await new Token({
         userId: user._id,
